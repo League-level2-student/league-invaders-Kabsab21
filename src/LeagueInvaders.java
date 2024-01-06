@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import javax.swing.Timer;
 
-public class LeagueInvaders extends GamePanel implements ActionListener{
+public class LeagueInvaders extends GamePanel {
 
 	JFrame frame = new  JFrame();
 	public final static int WIDTH = 500;
@@ -16,10 +16,11 @@ public class LeagueInvaders extends GamePanel implements ActionListener{
 	public static void main(String[] args) {
 		LeagueInvaders vadors = new LeagueInvaders();
 		vadors.setup();
+
 	}
 	
 	public void setup() {
-	//	frameDraw.start();
+		frameDraw.start();
 		GamePanelObject = new GamePanel();
 		frame.add(GamePanelObject);
 		frame.addKeyListener(this);
@@ -29,21 +30,7 @@ public class LeagueInvaders extends GamePanel implements ActionListener{
 		
 	}
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		
-		// TODO Auto-generated method stub
-		if(currentState == MENU){
-		    updateMenuState();
-		    System.out.println("action");
-		}else if(currentState == GAME){
-		    updateGameState();
-		    System.out.println("action");
-		}else if(currentState == END){
-		    updateEndState();
-		    System.out.println("action");
-		}
-	}
+	
 	
 	
 	

@@ -9,20 +9,19 @@ import java.awt.event.KeyListener;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-public class GamePanel extends JPanel implements KeyListener {
+public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
+	
 	public final int MENU = 0;
 	public final int GAME = 1;
 	public final int END = 2;
-	int currentState = MENU;
+	int currentState = 0;
 	Font TitleFont = new Font("Arial", Font.PLAIN, 30);
 	Font TextFont = new Font("Arial", Font.PLAIN, 20);
 	
 	
-	 
-	
 	@Override
-	public void paintComponent(Graphics g ){
+	public void paintComponent(Graphics g){
 		if(currentState == MENU){
 		    drawMenuState(g);
 		}else if(currentState == GAME){
@@ -34,12 +33,15 @@ public class GamePanel extends JPanel implements KeyListener {
 	
 	void updateMenuState( ) { 
 		currentState = MENU;
+		
 	}
 	void updateGameState() {  
 		currentState = GAME;
+		
 	}
 	void updateEndState()  { 
 		currentState = END;
+
 	}
 	void drawMenuState(Graphics g) { 
 		g.setColor(Color.BLUE);
@@ -69,32 +71,41 @@ public class GamePanel extends JPanel implements KeyListener {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
+		
 		if (e.getKeyCode()==KeyEvent.VK_ENTER) {
+			
 		    if (currentState == END) {
-		        currentState = MENU; 
-		        System.out.println("ack");
+		        currentState = MENU;   
 		    }else {
 		        currentState++;
 		    }
 			
-		}   
-		if (e.getKeyCode()==KeyEvent.VK_UP) {
-		    System.out.println("UP");
 		}
-		if (e.getKeyCode()==KeyEvent.VK_DOWN) {
-		    System.out.println("down");
-		}
-		if (e.getKeyCode()==KeyEvent.VK_LEFT) {
-		    System.out.println("lefti loosy");
-		}
-		if (e.getKeyCode()==KeyEvent.VK_RIGHT) {
-		    System.out.println("right");
-		}
+		repaint();
+
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
+		
+	}
+
+public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		if(currentState == 0){
+		    updateMenuState();
+		    
+		    //System.out.println("action  "+currentState);
+		}else if(currentState == 1){
+		    updateGameState();
+		 
+		    //System.out.println("action "+currentState);
+		}else if(currentState == 2){
+		    updateEndState();
+		   
+		   // System.out.println("action "+currentState);
+		}
 		
 	}
 
