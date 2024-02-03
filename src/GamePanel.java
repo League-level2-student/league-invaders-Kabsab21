@@ -99,10 +99,20 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		g.fillRect(0, 0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT);
 		}
 		object.draw(g);
+		g.setColor(Color.YELLOW);
+		g.setFont(TextFont);
+		g.drawString("score: "+object.getScore(), 100, 50);
 	}
 	void drawEndState(Graphics g)  {  
 		g.setColor(Color.RED);
 		g.fillRect(0, 0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT);
+		g.setFont(TitleFont);
+		g.setColor(Color.YELLOW);
+		g.drawString("      GAME LOST", 100, 200);
+		g.setFont(TextFont);
+		g.drawString("ending score: "+object.getScore(), 150, 300);
+		g.drawString("Press enter to restart", 150, 400);
+
 	}
 
 	@Override
@@ -117,10 +127,13 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		
 		if (e.getKeyCode()==KeyEvent.VK_ENTER) {
 			
-			System.out.println("pressed enter");
+			//System.out.println("pressed enter");
 		    startGame();
 		    if (currentState == END) {
-		        currentState = MENU;   
+		    	ship = new RocketShip(250,700, 50, 50);
+		    	object = new ObjectManager(ship);
+		        currentState = MENU;  
+		        
 		    }else {
 		        currentState++;
 		    }
