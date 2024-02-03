@@ -9,20 +9,34 @@ RocketShip rocket ;
 ArrayList projectiles = new  <Projectile>ArrayList();
  ArrayList aliens = new  <Alien>ArrayList();
 Random random = new Random();
+int score = 0;
+
 
 ObjectManager(RocketShip rocket){
 	this.rocket = rocket;
 }
 
+void checkCollison() {
+	for( int i = aliens.size()-1; i >= 0; i-- ) {
+		Alien ij = (Alien) aliens.get(i);
+			if(rocket.collisionBox.intersects(ij.collisionBox) == true) {
+			ij.isActive = false;
+			rocket.isActive = false;
+			System.out.println("not active");
+		}
+	}
+	}
+
+
 void addProjectile(Projectile obj) {
-	
+	projectiles.add(new Projectile(random.nextInt(LeagueInvaders.WIDTH),0,50,50));
 }
 void addAlien() {
 aliens.add(new Alien(random.nextInt(LeagueInvaders.WIDTH),0,50,50));
 }
 
 void kindaneedmetyhodIguess(Graphics g) {
-for( int i = aliens.size()-1; i > 0; i-- ) {
+for( int i = aliens.size()-1; i >= 0; i-- ) {
 	Alien ij = (Alien) aliens.get(i);
 	ij.update();
 	if( ij.y > LeagueInvaders.HEIGHT ) {
@@ -32,11 +46,12 @@ for( int i = aliens.size()-1; i > 0; i-- ) {
 	ij.draw(g);
 }
 
-for( int i = projectiles.size()-1; i > 0; i-- ) {
+for( int i = projectiles.size()-1; i >= 0; i-- ) {
 	Projectile ij = (Projectile) projectiles.get(i);
 	ij.update();
 	if( ij.y > LeagueInvaders.HEIGHT ) {
 		ij.isActive = false;
+		
 	}
 	ij.draw(g);
 	}
@@ -45,11 +60,14 @@ for( int i = projectiles.size()-1; i > 0; i-- ) {
 
 
 void update() {
-	
+	checkCollison();
+	purgeObjects();
 }
 
  void draw(Graphics g){
 	 rocket.draw(g);
+	 rocket.update();
+	 kindaneedmetyhodIguess(g);
 }
  
  void purgeObjects() {

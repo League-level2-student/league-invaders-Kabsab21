@@ -25,11 +25,13 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	ObjectManager object = new ObjectManager(ship);
 	public static BufferedImage image;
 	public static boolean needImage = true;
-	public static boolean gotImage = false;	
+	public static boolean gotImage = false;
+	Projectile oj;
 	Timer alienSpawn;
 	
 	void startGame(){
-		
+	    alienSpawn = new Timer(1000 , object);
+	    alienSpawn.start();
 	}
 	
 	void loadImage(String imageFile) {
@@ -45,6 +47,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	}
 	
 	GamePanel(){
+	
 		frameDraw = new Timer(1000/60,this);
 	    frameDraw.start();
 	    if (needImage) {
@@ -70,6 +73,10 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	void updateGameState() {  
 		currentState = GAME;
 		object.update();
+		if( ship.isActive == false) {
+			updateEndState();
+		}
+		
 	}
 	void updateEndState()  { 
 		currentState = END;
@@ -109,7 +116,9 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		// TODO Auto-generated method stub
 		
 		if (e.getKeyCode()==KeyEvent.VK_ENTER) {
+			
 			System.out.println("pressed enter");
+		    startGame();
 		    if (currentState == END) {
 		        currentState = MENU;   
 		    }else {
@@ -128,6 +137,9 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		}
 		if (e.getKeyCode()==KeyEvent.VK_RIGHT) {
 			ship.right();
+		}
+		if (e.getKeyCode()==KeyEvent.VK_SPACE) {
+			object.addProjectile(ship.getProjectile());
 		}
 		
 	}
@@ -156,7 +168,7 @@ public void actionPerformed(ActionEvent e) {
 		   // System.out.println("action "+currentState);
 		}
 		
-		System.out.println("action");
+	//	System.out.println("action");
 		repaint();
 		
 	}
